@@ -1,0 +1,9 @@
+body {
+    background-color:rgb(83, 216, 187);
+}
+
+#splitContainer li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+}

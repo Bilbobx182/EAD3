@@ -1,0 +1,143 @@
+postgraphile -c postgres://CiaranLaptop:postgress@localhost/dellstore2 --schema postgraphile
+
+----
+Q2
+----
+
+{
+  query{
+    allCustomers(condition: {firstname:"VKUUXF"}){
+      nodes{
+        firstname
+        lastname
+      }
+    }
+  }
+}
+
+{
+  query{
+    allCustomers(condition: {firstname:"VKUUXF"}){
+      nodes{
+        username
+        city
+      }
+    }
+  }
+}
+
+{
+    query{
+    allCustomers{
+      
+    
+      nodes{
+        names
+      
+      }}
+    } 
+}
+
+
+----
+Q3
+----
+{
+  query {
+   allInventories {
+    nodes {
+      quanInStock
+      productByProdId {
+        prodId
+        title
+       categoryByCategory{
+        categoryname
+      }
+        
+      }
+    }
+  }
+  }
+}
+OUTPUT (SINGLE)
+            "quanInStock": 494,
+            "productByProdId": {
+              "prodId": 9687,
+              "title": "ALADDIN POCUS",
+              "categoryByCategory": {
+                "categoryname": "Comedy"
+              }
+            }
+          }
+          
+Describe an application of the query you have chosen to write : Useful for a monthly stock take knowing how much of each product they have and what catagory each item belongs to. That way they can make an infomed decsiion not to get an unpopular genre.
+
+---
+Q4
+---
+mutation newOrder
+	($inputorder: CreateOrderInput!, 
+    $inputcustomerhistory: CreateCustHistInput!,
+  		$inputorderline: CreateOrderlineInput!) {
+  createOrder(input: $inputorder){
+    clientMutationId
+    order {
+      orderid
+      orderdate
+      customerid
+      netamount
+      tax
+      totalamount
+    }
+  }
+  createCustHist(input: $inputcustomerhistory){
+    clientMutationId
+    custHist {
+      customerid
+      prodId
+      orderid
+    }
+  }
+  createOrderline(input: $inputorderline){
+    clientMutationId
+    orderline {
+      orderlineid
+      orderid
+      prodId
+      quantity
+      orderdate
+    }
+  }
+}
+
+{
+    "inputorder": {
+    "clientMutationId": "1",
+    "order": {
+      "orderid": 60351,
+      "orderdate": "2018-03-10",
+      "customerid": 182,
+      "netamount": "170",
+      "tax": "50",
+      "totalamount": "230"
+    }  
+  },
+  "inputcustomerhistory": {
+    "clientMutationId": "1",
+    "custHist": {
+      "customerid": 182,
+      "prodId": 1,
+      "orderid": 60351
+    }
+  },
+  "inputorderline": {
+    "clientMutationId": "1",
+    "orderline": {
+      "orderlineid": 7,
+      "orderid": 60351,
+      "prodId": 4,
+      "quantity": 1,
+      "orderdate": "2018-03-10"
+    }
+  }
+}
