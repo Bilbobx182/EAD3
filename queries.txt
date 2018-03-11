@@ -3,72 +3,48 @@ postgraphile -c postgres://CiaranLaptop:postgress@localhost/dellstore2 --schema 
 ----
 Q2
 ----
-
-{
-  query{
-    allCustomers(condition: {firstname:"VKUUXF"}){
-      nodes{
-        firstname
-        lastname
-      }
-    }
-  }
-}
-
-{
-  query{
-    allCustomers(condition: {firstname:"VKUUXF"}){
-      nodes{
-        username
-        city
-      }
-    }
-  }
-}
-
 {
     query{
     allCustomers{
-      
-    
       nodes{
         names
-      
       }}
     } 
 }
-
 
 ----
 Q3
 ----
 {
   query {
-   allInventories {
-    nodes {
-      quanInStock
-      productByProdId {
-        prodId
-        title
-       categoryByCategory{
-        categoryname
-      }
-        
+    allInventories {
+      nodes {
+        quanInStock
+        productByProdId {
+          prodId
+          title
+          price
+          categoryByCategory {
+            categoryname
+          }
+        }
       }
     }
   }
-  }
 }
+
 OUTPUT (SINGLE)
-            "quanInStock": 494,
-            "productByProdId": {
-              "prodId": 9687,
-              "title": "ALADDIN POCUS",
-              "categoryByCategory": {
-                "categoryname": "Comedy"
-              }
-            }
-          }
+{
+    "quanInStock": 138,
+    "productByProdId": {
+		"prodId": 1,
+		"title": "ACADEMY ACADEMY",
+		"price": "25.99",
+        "categoryByCategory": {
+                "categoryname": "Sci-Fi"
+		}
+    }
+}
           
 Describe an application of the query you have chosen to write : Useful for a monthly stock take knowing how much of each product they have and what catagory each item belongs to. That way they can make an infomed decsiion not to get an unpopular genre.
 

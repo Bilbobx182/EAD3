@@ -1,7 +1,7 @@
 {
-  "name": "ciaranonuallain_ead2",
+  "name": "ciaranonuallain_ead3",
   "version": "1.0.0",
-  "description": " EAD LAB 2",
+  "description": " EAD LAB 3",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

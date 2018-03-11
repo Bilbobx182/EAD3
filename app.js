@@ -1,10 +1,8 @@
 var express = require("express");
 var http = require('http');
 var massive = require("massive");
-
-// var graphqlHTTP = require('express-graphql');
-// var graphql  = require('graphql');
-
+var graphqlHTTP = require('express-graphql');
+var graphql = require('graphql');
 
 var app = express();
 
@@ -46,4 +44,49 @@ app.get('/customernames/:id', (req, res) => {
     });
 });
 
+const test = {
+    customer : {
+         id : 1,
+        firstname:"ciaran"
+    }
+}
 
+const customerType = new graphql.GraphQLObjectType({
+    name: 'Customer',
+    fields: {
+        customerid: {type: graphql.GraphQLID},
+        firstname: {type: graphql.GraphQLString}
+    }
+});
+
+var graphresult;
+const queryType = new graphql.GraphQLObjectType({
+    name: 'Query',
+    fields: {
+        customer: {
+            type: customerType,
+            args: {
+                id: {type: graphql.GraphQLInt}
+            },
+            resolve: function (_, {id}) {
+                db = app.get('db');
+                var queryString = 'select * from postgraphile.customers where customerid = ';
+
+                 db.query(queryString + id,
+                    {something: 1}
+                ).then(results => {
+                    return results["0"]
+                });
+                return test;
+            }
+        }
+
+    }
+});
+const schema = new graphql.GraphQLSchema({query: queryType});
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+}));
+app.listen(4000, () => console.log('Go to LocalHost'));
